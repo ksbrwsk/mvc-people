@@ -4,7 +4,7 @@
 
 **Prerequisites:**
 
-* [Java 17](https://openjdk.net/)
+* [Java 21](https://openjdk.net/)
 * [Apache Maven](https:http://maven.apache.org/)
 * [Docker](https://www.docker.com/)
 
