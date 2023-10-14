@@ -3,7 +3,6 @@ package de.ksbrwsk.people;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 
 import java.util.ArrayList;
@@ -12,41 +11,53 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DataMongoTest(excludeAutoConfiguration = EmbeddedMongoAutoConfiguration.class)
-class PersonRepositoryTest extends AbstractIntegrationTest {
+@DataMongoTest
+class PersonRepositoryTest extends PostgresTestContainer {
 
     @Autowired
     PersonRepository personRepository;
 
-    @BeforeEach
-    public void init() {
-        this.personRepository.deleteAll();
+    private Person findFirst() {
+        Optional<Person> first = this.personRepository.findTopByOrderByIdAsc();
+        assertTrue(first.isPresent());
+        return first.get();
     }
 
-    @Test
-    void persist() {
+    @BeforeEach
+    public void init() {
         List<Person> people = new ArrayList<>();
-        people.add(new Person("Name1"));
-        people.add(new Person("Name2"));
-        List<Person> people1 = this.personRepository.saveAll(people);
-        assertFalse(people.isEmpty());
-        assertEquals(2, people1.size());
+        for (int i = 1; i <= 100 ; i++) {
+            people.add(new Person("Person@"+i));
+        }
+        this.personRepository.deleteAll();
+        List<Person> all = this.personRepository.saveAll(people);
+        assertFalse(all.isEmpty());
+        assertEquals(100L,all.size());
     }
 
     @Test
     void findById() {
-        Person person = this.personRepository.save(new Person("Name"));
-        Optional<Person> result = this.personRepository.findById(person.getId());
+        Person first = this.findFirst();
+        Optional<Person> result = this.personRepository.findById(first.getId());
         assertTrue(result.isPresent());
         assertFalse(result.get().getId().isEmpty());
-        assertEquals("Name", result.get().getName());
+        assertEquals("Person@1", result.get().getName());
     }
 
     @Test
     void delete() {
-        Person person = this.personRepository.save(new Person("Name"));
+        Person person = this.findFirst();
         this.personRepository.delete(person);
         long count = this.personRepository.count();
-        assertEquals(count, 0L);
+        assertEquals(count, 99L);
+    }
+
+    @Test
+    void update() {
+        Person first = this.findFirst();
+        first.setName("Name");
+        Person saved = this.personRepository.save(first);
+        assertEquals(first.getId(),saved.getId());
+        assertEquals("Name", saved.getName());
     }
 }
