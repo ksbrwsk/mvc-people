@@ -12,3 +12,6 @@ server:
     enabled: true
   http2:
     enabled: true
+springdoc:
+  api-docs:
+    path: '/api-docs'

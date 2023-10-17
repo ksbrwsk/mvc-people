@@ -1,12 +1,13 @@
 package de.ksbrwsk.people;
 
-import org.springframework.boot.SpringApplication;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
 class MvcPeopleApplicationTests {
-	public static void main(String[] args) {
-		SpringApplication.from(MvcPeopleApplication::main)
-				.with(PostgresTestContainer.class)
-				.run(args);
-	}
+
+    @Test
+    void contextLoads() {
+    }
 
 }

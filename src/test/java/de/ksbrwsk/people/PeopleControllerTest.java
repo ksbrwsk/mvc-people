@@ -7,10 +7,13 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.web.reactive.server.EntityExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import static de.ksbrwsk.people.Constants.API;
 import static org.mockito.ArgumentMatchers.any;
@@ -26,6 +29,14 @@ class PeopleControllerTest {
     @MockBean
     PersonRepository personRepository;
 
+    Consumer<EntityExchangeResult<byte[]>> PRINT = (x) -> {
+        if (x.getResponseBody() != null) {
+            System.out.printf("%S - %s", x.getStatus(), new String(x.getResponseBody(), StandardCharsets.UTF_8));
+        } else {
+            System.out.printf("%S - NO RESULT", x.getStatus());
+        }
+    };
+
     @Test
     void handleNotFound() {
         this.webTestClient
@@ -33,7 +44,9 @@ class PeopleControllerTest {
                 .uri("/api/peple")
                 .exchange()
                 .expectStatus()
-                .isNotFound();
+                .isNotFound()
+                .expectBody()
+                .consumeWith(PRINT);
     }
 
     @Test
@@ -79,7 +92,9 @@ class PeopleControllerTest {
                 .uri(API + "/4711")
                 .exchange()
                 .expectStatus()
-                .isNotFound();
+                .isNotFound()
+                .expectBody()
+                .consumeWith(PRINT);
     }
 
     @Test
@@ -106,7 +121,9 @@ class PeopleControllerTest {
                 .uri(API + "/4711")
                 .exchange()
                 .expectStatus()
-                .isNotFound();
+                .isNotFound()
+                .expectBody()
+                .consumeWith(PRINT);
     }
 
     @Test
@@ -134,7 +151,9 @@ class PeopleControllerTest {
                 .bodyValue(Optional.empty())
                 .exchange()
                 .expectStatus()
-                .isBadRequest();
+                .isBadRequest()
+                .expectBody()
+                .consumeWith(PRINT);
     }
 
     @Test
@@ -164,7 +183,10 @@ class PeopleControllerTest {
                 .bodyValue(new Person("4711", "Update"))
                 .exchange()
                 .expectStatus()
-                .isNotFound();
+                .isNotFound()
+                .expectBody()
+                .consumeWith(PRINT);
+
     }
 
     @ParameterizedTest
@@ -193,7 +215,9 @@ class PeopleControllerTest {
                 .bodyValue(new Person(name))
                 .exchange()
                 .expectStatus()
-                .isBadRequest();
+                .isBadRequest()
+                .expectBody()
+                .consumeWith(PRINT);
     }
 
     @ParameterizedTest
@@ -226,6 +250,9 @@ class PeopleControllerTest {
                 .bodyValue(new Person("4711", name))
                 .exchange()
                 .expectStatus()
-                .isBadRequest();
+                .isBadRequest()
+                .expectBody()
+                .consumeWith(PRINT);
     }
+    
 }

@@ -1,6 +1,6 @@
 # mvc-people
 
-#### Spring MVC version for my Reactive Spring Talk 12/2020.
+#### Simple Spring Boot MVC example.
 
 **Prerequisites:**
 
@@ -29,3 +29,14 @@ mvn spring-boot:run
 * Database Connectivity (MongoDB)
 * Unit Testing
 * Integration Testing with Testcontainers (MongoDB)
+* Open API
+
+Point your Browser to
+```bash
+http://localhost:8080/swagger-ui/index.html
+```
+to try out swagger ui, or
+```bash
+http://localhost:8080/api-docs
+```
+to browse the api in JSON format.
