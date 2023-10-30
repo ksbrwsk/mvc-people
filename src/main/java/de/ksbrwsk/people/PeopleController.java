@@ -63,20 +63,18 @@ public class PeopleController {
 
     @Operation(summary = "Delete a person by its id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "person successfully deleted",
+            @ApiResponse(responseCode = "204", description = "person successfully deleted",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = Person.class))}),
-            @ApiResponse(responseCode = "400", description = "Invalid id supplied",
-                    content = @Content),
             @ApiResponse(responseCode = "404", description = "Person not found",
                     content = @Content)})
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<String> handleDeleteById(@NotNull @PathVariable
-                                                   @Parameter(description = "id of person to be searched") String id) {
+    public ResponseEntity<Void> handleDeleteById(@NotNull @PathVariable
+                                                 @Parameter(description = "id of person to be searched") String id) {
         Optional<Person> personOptional = this.personRepository.findById(id);
         if (personOptional.isPresent()) {
             this.personRepository.delete(personOptional.get());
-            return ResponseEntity.ok("successfully deleted!");
+            return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();
         }

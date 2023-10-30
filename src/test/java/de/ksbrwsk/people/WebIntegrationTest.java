@@ -7,7 +7,6 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.EntityExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
@@ -114,12 +113,9 @@ public class WebIntegrationTest extends MongoDbTestcontainer {
                 .uri(API + "/" + first.getId())
                 .exchange()
                 .expectStatus()
-                .isOk()
-                .expectHeader()
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .isNoContent()
                 .expectBody()
-                .jsonPath("$")
-                .isEqualTo("successfully deleted!");
+                .consumeWith(PRINT);
     }
 
     @Test

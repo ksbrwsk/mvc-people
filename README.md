@@ -30,6 +30,7 @@ mvn spring-boot:run
 * Unit Testing
 * Integration Testing with Testcontainers (MongoDB)
 * Open API
+* Spring RestDocs
 
 Point your Browser to
 ```bash
@@ -37,6 +38,6 @@ http://localhost:8080/swagger-ui/index.html
 ```
 to try out swagger ui, or
 ```bash
-http://localhost:8080/api-docs
+http://localhost:8080/docs/index.html
 ```
-to browse the api in JSON format.
+to browse the Spring Restdocs documentation.

@@ -108,8 +108,8 @@ class PeopleControllerTest {
                 .exchange()
                 .expectStatus()
                 .is2xxSuccessful()
-                .expectBody(String.class)
-                .isEqualTo("successfully deleted!");
+                .expectBody()
+                .consumeWith(PRINT);
     }
 
     @Test
@@ -254,5 +254,5 @@ class PeopleControllerTest {
                 .expectBody()
                 .consumeWith(PRINT);
     }
-    
+
 }
