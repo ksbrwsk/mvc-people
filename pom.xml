@@ -9,7 +9,7 @@
     </parent>
     <groupId>de.ksbrwsk</groupId>
     <artifactId>mvc-people</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1-SNAPSHOT</version>
     <name>mvc-people</name>
     <description>demo project for spring boot</description>
     <properties>
@@ -24,7 +24,7 @@
     </properties>
     <scm>
         <developerConnection>scm:git:https://github.com/ksbrwsk/mvc-people.git</developerConnection>
-        <tag>mvc-people-1.1.0</tag>
+        <tag>HEAD</tag>
     </scm>
     <dependencies>
         <dependency>
