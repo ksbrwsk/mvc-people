@@ -22,8 +22,11 @@
         <springdoc-openapi-maven-plugin.version>1.4</springdoc-openapi-maven-plugin.version>
         <spring-restdocs-asciidoctor.version>3.0.2</spring-restdocs-asciidoctor.version>
         <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
-
     </properties>
+    <scm>
+        <developerConnection>scm:git:https://github.com/ksbrwsk/mvc-people.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -205,4 +208,11 @@
             </plugin>
         </plugins>
     </build>
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub OWNER Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/ksbrwsk/mvc-people</url>
+        </repository>
+    </distributionManagement>
 </project>
