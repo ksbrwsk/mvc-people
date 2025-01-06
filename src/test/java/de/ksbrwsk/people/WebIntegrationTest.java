@@ -115,7 +115,7 @@ public class WebIntegrationTest extends MongoDbTestcontainer {
                 .expectStatus()
                 .isNoContent()
                 .expectBody()
-                .consumeWith(PRINT);git s
+                .consumeWith(PRINT);
     }
 
     @Test
