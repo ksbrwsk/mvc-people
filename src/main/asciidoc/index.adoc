@@ -1,4 +1,4 @@
-= Reactive People Postgresql API Guide
+= MVC People Postgresql API Guide
 Spring Boot MVC Restdoc example;
 :doctype: book
 :icons: font

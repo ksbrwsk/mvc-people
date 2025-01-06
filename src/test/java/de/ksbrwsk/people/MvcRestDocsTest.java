@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -42,7 +42,7 @@ public class MvcRestDocsTest {
 
     ObjectMapper objectMapper = new ObjectMapper();
 
-    @MockBean
+    @MockitoBean
     PersonRepository personRepository;
 
     @BeforeEach
@@ -57,7 +57,6 @@ public class MvcRestDocsTest {
         this.mockMvc.perform(get("/api/peple").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andDo(document("handle-not-found"));
-
     }
 
     @Test
@@ -200,5 +199,4 @@ public class MvcRestDocsTest {
                                 fieldWithPath("name").description("The person's name")
                         )));
     }
-
 }

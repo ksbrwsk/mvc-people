@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.reactive.server.EntityExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
@@ -26,7 +26,7 @@ class PeopleControllerTest {
     @Autowired
     WebTestClient webTestClient;
 
-    @MockBean
+    @MockitoBean
     PersonRepository personRepository;
 
     Consumer<EntityExchangeResult<byte[]>> PRINT = (x) -> {
@@ -186,7 +186,6 @@ class PeopleControllerTest {
                 .isNotFound()
                 .expectBody()
                 .consumeWith(PRINT);
-
     }
 
     @ParameterizedTest
@@ -254,5 +253,4 @@ class PeopleControllerTest {
                 .expectBody()
                 .consumeWith(PRINT);
     }
-
 }
